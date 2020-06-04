@@ -1,16 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 * {
     box-sizing: border-box;
 }
 
 body {
+    font-family: 'Open Sans', sans-serif;
     padding: 0px;
     margin: 0px;
-}
-
-.container-fluid {
-    background-color: silver;
-    height: 100vh;
-    width: 100%;
 }
 
 .entete {
@@ -19,10 +15,40 @@ body {
 }
 
 .bg {
-    height: 500px;
+    height: 680px;
+    background-image: url('../images/bg-quizz.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-color: silver;
 }
 
-.icon-pseudo {
-    background-color: red;
-    height: 5px;
+.logo {
+    width: 10%;
+    height: 220px;
+    background-image: url('../images/logo-QuizzSA.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    transform: rotate(-35deg);
+    position: absolute;
+    left: 2%;
+    top: 15%;
+}
+
+.text-align {
+    color: white;
+    position: absolute;
+    transform: rotate(-35deg);
+    left: 0%;
+    top: 40%;
+}
+
+.text-resume {
+    width: 20%;
+    height: 160px;
+    margin-left: 18%;
+    margin-top: 13%;
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
 }
