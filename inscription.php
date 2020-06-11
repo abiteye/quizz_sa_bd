@@ -1,40 +1,13 @@
+
 <?php
-        /*$objetPDO = new PDO('mysql:dbname=quizz_sa_bd; host=localhost', 'root', '');
+        require_once './data/requete.php';
 
-        //requete d'insertion
+            
 
-        $statement = $objetPDO->prepare('INSERT INTO utilisateur VALUES(NULL, :prenom, :nom, :pseudo, :pwd, :photo)');
-
-        //lecture des marqueurs
-
-        $statement->bindValue(':prenom', $_POST['prenom'], PDO::PARAM_STR);
-        $statement->bindValue(':nom', $_POST['nom'], PDO::PARAM_STR);
-        $statement->bindValue(':pseudo', $_POST['pseudo'], PDO::PARAM_STR);
-        $statement->bindValue(':pwd', $_POST['pwd'], PDO::PARAM_STR);
-        //$statement->bindValue(':profil', $_POST['pwd'], PDO::PARAM_STR);
-        $statement->bindValue(':photo', $_FILES['photo']['name'], PDO::PARAM_STR);
-        
-        //execution de la requete
-
-        $insertIsOk = $statement->execute();
-
-        if($insertIsOk)
-        {
-            $msg= "requete envoyée avec succès !";
-        }
-        else
-        {
-            $msg = "L'insertion a échoué";
-        }*/
 ?>
+<div class="container-form rounded shadow"> 
 
-<div class="container-form rounded shadow ">
-    <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-<!--validation formulaire inscription-->
-<script type="text/javascript" src="./public/js/jquery.js"></script>
-    <form class="" id="" method="post">
+    <form class="" id="" method="post" enctype="multipart/form-data"> 
         <div class="form-group col-md-6">
             <label for="prenom">Prenom</label>
             <input type="text" class="form-control h-25" id="prenom" name="prenom" placeholder="Prenom">
@@ -47,7 +20,7 @@
         </div>
         <div class="form-group col-md-6">
             <label for="pseudo">Pseudo</label>
-            <input type="text" class="form-control h-25" id=""  name="" placeholder="Pseudo">
+            <input type="text" class="form-control h-25" id=""  name="pseudo" placeholder="Pseudo">
             <span class="error"></span>
         </div>
         <div class="form-group col-md-6">
@@ -62,24 +35,50 @@
         </div>
         <div class="row">
             <label for="avatar">Avatar</label>
-            <input type="file" class="form-control-file" name="photo" onchange="loadFile(event)">
+            <input type="file" class="form-control-file" id="photo" name="image" onchange="">
             <img id="output" src="" alt="" class="form-control-avatar">
-                <script>
-                //Script d'affichage du fichier image pour le formulaire admin.
-                    var loadFile = function(event) {
-                    var output = document.getElementById('output');
-                    output.src = URL.createObjectURL(event.target.files[0]);
-                    output.onload = function() {
-                    URL.revokeObjectURL(output.src) 
-                    }
-                }; 
-                </script>            
+           
         </div>
-        <button type="button" id="button" class="btn btn-info ml-5">Créer compte</button>
+        <button type="submit" id="button" name="btn_save" class="btn btn-info ml-5">Créer compte</button>
     </form>
+
+    <?php 
+    if(isset($_POST['btn_save'])){
+        inscription(
+            
+            $_POST['prenom'],
+            $_POST['nom'],
+            $_POST['pseudo'],
+            $_POST['pwd'],
+            $_FILES['image']['name']
+        ); 
+        echo "error";
+        
+    }
+    ?>
 
 <!-- vlaidation du formaualire d'inscription -->
 <script src="./public/js/validInscription.js"></script>
+<!--validation formulaire inscription-->
+<script type="text/javascript" src="./public/js/jquery.js"></script>
+<script>
+            //Script d'affichage du fichier image pour le formulaire admin.
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+    
+            reader.onload = function(e) {
+                $('#output').attr('src', e.target.result);
+            }
+    
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+            $("#photo").change(function() {
+                readURL(this);
+});
+</script> 
 
 <style>
     .container-form {

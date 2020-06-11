@@ -1,12 +1,13 @@
 <?php 
-    //ouverture d'une session de connexion à la base de donnée quizz_sa_bd
-
+    //ouverture d'une session de connexion à la base de donnée  abiteye_quizz_sa_bd
         function connexion()
         {
             $connect="";
+            $dataBase = "quizz_sa_bd";
             try
             {
-                $connect =new PDO( 'mysql:host=localhost;dbname=quizz_sa_bd', 'root', '');
+                $connect =new PDO("mysql:host=localhost;dbname=$dataBase", 'root', '');
+                //$connect =new PDO("mysql:host=mysql-abiteye.alwaysdata.net ;dbname=$dataBase", 'abiteye', 'Joueur66');
 
                 $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 
@@ -14,13 +15,14 @@
             }
             catch(PDOException $e)
             {
-                die('la connexion a échouée !');
+                echo "Connection failed: " . $e->getMessage();
+                //die($e);
             }
         }
 
         function userConnexion($pseudo, $pwd)
         {
-            $connect=connexion();
+            $connect = connexion();
 
             // selection de la table user
 
@@ -39,3 +41,30 @@
                 
             return $statement;
         }
+
+        function inscription($prenom, $nom,$pseudo,$pwd,$photo)
+        {
+                     
+            $objetPDO = connexion($dataBase);
+
+
+            $pdoStat = $objetPDO->prepare("INSERT INTO utilisateur (id_user, prenom, nom, pseudo, pwd, photo) VALUES (?,?,?,?,?,?)");
+
+            //lecture des marqueurs
+
+            $pdoStat -> execute(array(      
+
+                NULL, 
+                $prenom,
+                $nom, 
+                $pseudo, 
+                $pwd,
+                $photo
+        
+            ));
+                   
+        }
+
+
+
+?>

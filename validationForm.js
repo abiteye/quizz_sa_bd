@@ -1,4 +1,4 @@
-// validation
+// validation formulaire de connexion
 
 $(document).ready(function() {
     $("#submit").click(function() {
@@ -23,9 +23,7 @@ $(document).ready(function() {
     });
 });
 
-/*if(isset($message)){
-       echo '<label class="text-danger">'.$message.'</label>';
-   }*/
+
 
 //recupération des id
 var formm = document.getElementById('forme');
@@ -62,7 +60,29 @@ function sendData(action, conten, is_post) {
     ajax.send(donnee);
 }
 
-// la function qui va recupéré les données du formulaire
+function sendData2(action, page, content) {
+
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = () => {
+        if ((ajax.readyState == 4) && ajax.status == 200) {
+            let data = ajax.responseText;
+            if (data == "error") {
+
+                alert("la page n'existe pas");
+
+            } else {
+                var pag = document.getElementById(content);
+                pag.innerHTML = data;
+            }
+        }
+    }
+
+
+    ajax.open('POST', `index.php?action=${action}&page=${page}`, true);
+    ajax.send();
+}
+
+// la function qui va recupéré les données du formulaire c ici
 
 function getFormData() {
     var forme = document.getElementById('forme');
@@ -71,3 +91,18 @@ function getFormData() {
 
     return donnee;
 }
+
+// la fonction affichant le top5 et le score du joueur connecte
+
+$.ajax({
+    url: 'http://localhost/Projets/quizz_sa_bd/data/top_cinq.php',
+    dataType: 'json',
+    success: function(data) {
+        for (var i = 0; i < data.length; i++) {
+
+            var row = $('<tr><td>' + data[i].prenom + '</td><td>' + data[i].nom + '</td><td>' + data[i].score + '</td><tr>');
+
+            $('#tBodyUsers').append(row);
+        }
+    }
+});

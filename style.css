@@ -52,3 +52,9 @@ body {
     font-weight: bold;
     position: absolute;
 }
+
+.container-joueur {
+    background-color: red;
+    width: 60%;
+    height: 300px;
+}

@@ -1,11 +1,13 @@
 <?php
 require_once './data/requete.php';
+//session_start();
 
     function pageConnexion($post)
     {
+
         $pseudo = $post['pseudo'];
         $pwd    = $post['pwd'];
-        //var_dump($pseudo);
+
         $result = userConnexion($pseudo, $pwd);
         
         $result_array = $result->fetch();
@@ -14,30 +16,39 @@ require_once './data/requete.php';
 
           if($result_array['profil']=="admin")
           {
-            //echo " on est la addmin ";
+
             include './pages/accueil.php';
           }
           else
           {
-            //  require_once './pages/jeux.php';
+            if($result_array['profil']=="joueur"){
+
+              require_once './pages/jeux.php';
+            }
           }
         }
         else
         {
-            echo "Le pseudo ou le password est incorrect";
+          require_once './pages/template.php';
+          echo "Le pseudo ou le password est incorrect";
         }
 
     }
 
-    //Verification de l'etat de la connexion
-    function is_connect(){
-      if(!isset($_SESSION['statut'])){ 
-        header("location:index.php");
-      }
-    }//fonction de deconnexion
-    function deconnexion(){
-          unset($_SESSION['pseudo']);
-          unset($_SESSION['statut']);
-          session_destroy();
-    }
+    
+    /*function deconnection(){
+      //Destruction des données utlisateur
+      session_destroy();
+      unset( $_SESSION['userConnect']);
+       echo "logout";
+   }
+  
+   function is_connect(){
+       if(isset($_SESSION['userConnect'])){
+           return true;
+       }else{
+          return false;
+       }
+   }*/
+        
 ?>
